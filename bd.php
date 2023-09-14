@@ -1,5 +1,6 @@
 <?php
     function conectar(){
-        $conexion = mysql_connect('localhost','root','');
+        $con = mysql_connect("localhost","root","","usuarios");
+        mysqli_query("SET NAME 'utf8'");
     }
 ?>
