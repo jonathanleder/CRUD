@@ -9,6 +9,8 @@ if (isset($_GET['id'])) {
     $sql = "SELECT * FROM usuarios WHERE id = $id";
     $resultado = mysqli_query($conexion, $sql);
     $registro = mysqli_fetch_assoc($resultado);
+    $sqlRoles = "select * from roles";
+    $resultadoRoles = mysqli_query($conexion, $sqlRoles);
 
     mysqli_close($conexion);
 } else {
@@ -36,33 +38,56 @@ if (isset($_GET['id'])) {
     <br>
     <br>
     <section class="container">
-        <form class="row g-3 needs-validation" novalidate action="guardar_modificacion.php" method="post">
+        <form class="needs-validation" novalidate action="guardar_modificacion.php" method="post">
             <!-- Campos del formulario para editar los detalles del registro -->
-
-            <div class="col-md-4">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $registro['nombre']; ?>" required>
-                <div class="valid-feedback">
-                    Looks good!
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $registro['nombre']; ?>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="apellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $registro['apellido']; ?>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label for="mail" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="mail" name="mail" value="<?php echo $registro['mail']; ?>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <label for="apellido" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" value="<?php echo $registro['apellido']; ?>" required>
-                <div class="valid-feedback">
-                    Looks good!
+            <div class="row g-2">
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="nombre" name="usuario" value="<?php echo $registro['usuario']; ?>" required>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" value="<?php echo $registro['mail']; ?>" required>
-                <div class="valid-feedback">
-                    Looks good!
+                <div class="col-md-6">
+                    <div class="input-box">
+                    <label for="rol" class="form-label">Rol</label>
+                        <select class="form-control" name="rol" required>
+                            <option value="" selected> <?php echo $registro['rol']; ?> </option>
+                            <?php
+                            while ($filasRoles = mysqli_fetch_assoc($resultadoRoles)) {
+                            ?>
+                                <option value="<?php echo $filasRoles['rol'] ?>"><?php echo $filasRoles['rol'] ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                 </div>
             </div>
 
             <input type="hidden" name="id" value="<?php echo $registro['id']; ?>">
-            <div class="col-12">
+            <div class="col-12" style="margin-top: 5px;">
                 <button class="btn btn-primary" type="submit">Guardar cambios</button>
             </div>
             </div>
