@@ -25,7 +25,7 @@ if (isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <title>CRUD</title>
 </head>
 
@@ -38,7 +38,7 @@ if (isset($_GET['id'])) {
     <br>
     <br>
     <section class="container">
-        <form class="needs-validation" novalidate action="guardar_modificacion.php" method="post">
+        <form class="needs-validation" novalidate id="modificarForm">
             <!-- Campos del formulario para editar los detalles del registro -->
             <div class="row g-3">
                 <div class="col-md-4">
@@ -73,7 +73,7 @@ if (isset($_GET['id'])) {
                 </div>
                 <div class="col-md-6">
                     <div class="input-box">
-                    <label for="rol" class="form-label">Rol</label>
+                        <label for="rol" class="form-label">Rol</label>
                         <select class="form-control" name="rol" required>
                             <option value="" selected> <?php echo $registro['rol']; ?> </option>
                             <?php
@@ -86,7 +86,7 @@ if (isset($_GET['id'])) {
                 </div>
             </div>
 
-            <input type="hidden" name="id" value="<?php echo $registro['id']; ?>">
+            <input type="hidden" name="id" id="id" value="<?php echo $registro['id']; ?>">
             <div class="col-12" style="margin-top: 5px;">
                 <button class="btn btn-primary" type="submit">Guardar cambios</button>
             </div>
@@ -97,6 +97,8 @@ if (isset($_GET['id'])) {
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/scripts2.js"></script>
 </body>
 
 </html>

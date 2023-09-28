@@ -82,7 +82,7 @@
 
                 <div class="col-md-6">
                     <div class="input-box">
-                        <label for="rol" class="form-label">Rol</label>
+                        <label class="form-label">Rol</label>
                         <select class="form-control" name="rol" required>
                             <option value="1" selected>Seleccionar</option>
                             <?php

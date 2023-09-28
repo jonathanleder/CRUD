@@ -9,41 +9,51 @@ function mostrarMensaje(mensaje, tipo) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Selecciona el botón de alta
-    const altaButton = document.getElementById("altaForm");
 
-    // Agrega un evento de clic al botón de alta
-    altaButton.addEventListener("submit", function () {
+      // Selecciona el formulario de alta
+      const altaForm = document.getElementById("altaForm");
 
-        // Obtiene los datos del formulario
-        const nombre = document.querySelector('input[name="nombre"]').value;
-        const apellido = document.querySelector('input[name="apellido"]').value;
-        const mail = document.querySelector('input[name="mail"]').value;
-        const usuario = document.querySelector('input[name="usuario"]').value;
-        const rol = document.querySelector('select[name="rol"]').value;
-
-        // Realiza una petición AJAX para dar de alta al usuario
-        fetch("alta.php", {
-            method: "POST",
-            body: JSON.stringify({ nombre, apellido, mail, usuario, rol }),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            // Muestra el mensaje de confirmación
-            mostrarMensaje(data.mensaje);
-
-            // Limpia el formulario si el alta fue exitosa
-            if (data.success) {
-                document.getElementById("altaForm").reset();
-            }
-        })
-        .catch((error) => {
-            console.error("Error al dar de alta el registro:", error);
-        });
-    });
+      // Agrega un evento de envío al formulario de alta
+      altaForm.addEventListener("submit", function (event) {
+          event.preventDefault(); // Previene la recarga de la página por defecto
+  
+          // Obtiene los datos del formulario
+          const nombre = document.querySelector('input[name="nombre"]').value;
+          const apellido = document.querySelector('input[name="apellido"]').value;
+          const mail = document.querySelector('input[name="mail"]').value;
+          const usuario = document.querySelector('input[name="usuario"]').value;
+          const rol = document.querySelector('select[name="rol"]').value;
+  
+          // Realiza una petición AJAX para dar de alta al usuario
+          fetch("alta.php", {
+              method: "POST",
+              body: JSON.stringify({ nombre, apellido, mail, usuario, rol }),
+              headers: {
+                  "Content-Type": "application/json",
+              },
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+              // Muestra el mensaje de confirmación
+              Swal.fire({
+                  title: data.success ? 'Éxito' : 'Error',
+                  text: data.mensaje,
+                  icon: data.success ? 'success' : 'error',
+                  timer: 2000,
+                  showConfirmButton: false
+              }).then(function () {
+                  // Recarga la página después de dar de alta con éxito
+                  if (data.success) {
+                      document.getElementById("altaForm").reset();
+                      location.reload();
+                  }
+              });
+          })
+          .catch((error) => {
+              console.error("Error al dar de alta el registro:", error);
+          });
+      });
 
     // Agrega un evento de clic a todos los botones de clase "eliminar-btn"
     const eliminarButtons = document.querySelectorAll(".eliminar-btn");
